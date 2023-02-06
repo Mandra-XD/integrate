@@ -18,7 +18,6 @@ class Puesto extends Model
      * @var string[]
      */
     protected $fillable = [
-        'idPuestoTrabajo'
         'puesto',
         'lugar',
         'salario',
@@ -27,4 +26,10 @@ class Puesto extends Model
         'descripcion',
         'experiencia',
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
 }
