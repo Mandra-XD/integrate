@@ -77,6 +77,10 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('user-profile', function () {
 		return view('pages.laravel-examples.user-profile');
 	})->name('user-profile');
+
+});
+
+Route::group(['middleware' => 'auth'], function () {
 	Route::get('puesto-index', function () {
 		return view('puestos.index');
 	})->name('puesto-index');
@@ -84,8 +88,5 @@ Route::group(['middleware' => 'auth'], function () {
 		return view('puestos.create');
 	})->name('puesto.create');
 
-     Route::post('puesto-create', function () {
-		return view('puestos.index');
-	})->name('puesto.store');
-
+   Route::post('/puesto-store',[PuestosController::class,'store'])->name('puesto.store');
 });

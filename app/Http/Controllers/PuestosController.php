@@ -36,22 +36,17 @@ class PuestosController extends Controller
      */
     public function store(Request $request)
     {
-          $puestos = new Puesto();
-
-
-          $puestos->puesto = $request->get('puesto');
-          $puestos->lugar = $request->get('lugar');
-          $puestos->salario = $request->get('salario');
-          $puestos->tipo_empleo = $request->get('tipo_empleo');
-          $puestos->turno = $request->get('turno');
-          $puestos->descripcion = $request->get('descripcion');
-          $puestos->experiencia = $request->get('experiencia');
-
-
-          $puestos->save();
-
-         return redirect('puestos.index');
-
+        $request->validate([
+            'puesto' => 'required',
+            'lugar' => 'required',
+            'salario' => 'required',
+            'tipo_empleo' => 'required',
+            'turno' => 'required',
+            'descripcion' => 'required',
+            'experiencia' => 'required',
+        ]);
+        Puesto::create($request->all());
+        return redirect()->route('puestos.index');
     }
 
     /**
