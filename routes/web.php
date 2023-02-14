@@ -46,9 +46,9 @@ Route::get('/reset-password/{token}', function ($token) {
 Route::post('sign-out', [SessionsController::class, 'destroy'])->middleware('auth')->name('logout');
 Route::get('profile', [ProfileController::class, 'create'])->middleware('auth')->name('profile');
 Route::post('user-profile', [ProfileController::class, 'update'])->middleware('auth');
-Route::get('/puestos',[PuestosController::class],'index')->middleware('auth');
-Route::get('/puestos',[PuestosController::class],'create')->middleware('auth');
-Route::post('/puestos/pefil',[PuestosController::class],'store')->middleware('auth');
+//Route::get('/puestos',[PuestosController::class],'index')->middleware('auth');
+//Route::get('/puestos',[PuestosController::class],'create')->middleware('auth');
+
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('billing', function () {
 		return view('pages.billing');
@@ -81,12 +81,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('puesto-index', function () {
-		return view('puestos.index');
-	})->name('puesto-index');
-	Route::get('puesto-create', function () {
-		return view('puestos.create');
-	})->name('puesto.create');
-
+   Route::get('/puesto-index',[PuestosController::class,'index'])->name('puesto-index');
+   Route::get('/puesto-create',[PuestosController::class,'create'])->name('puesto.create');
    Route::post('/puesto-store',[PuestosController::class,'store'])->name('puesto.store');
+
 });

@@ -55,6 +55,18 @@
                             @csrf
                             <div class="row">
                                 <div class="mb-3 col-md-6">
+                                    <label class="form-label">Reclutador</label>
+                                    <select class="form-select" id="user_id" name="user_id" aria-label="Disabled select example" disabled>
+                                        <option  value="{{ auth()->user()->id }}" selected>{{ auth()->user()->name }}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 col-md-6">
+                                    <label class="form-label">Empresa</label>
+                                    <input type="text" id="puesto" name="puesto"
+                                        class="form-control border border-2 p-2" >
+
+                                </div>
+                                <div class="mb-3 col-md-6">
                                     <label class="form-label">Puesto de trabajo</label>
                                     <input type="text" id="puesto" name="puesto"
                                         class="form-control border border-2 p-2">

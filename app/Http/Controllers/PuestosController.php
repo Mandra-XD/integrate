@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Puesto;
-
+use App\Models\Empresa;
+use App\Models\User;
 class PuestosController extends Controller
 {
     /**
@@ -12,10 +13,12 @@ class PuestosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $puestos = Puesto::all();
-        return view('puestos.index', compact('puestos'));
+
+        return view('puestos.index', compact('puestos',));
     }
 
     /**
@@ -25,7 +28,10 @@ class PuestosController extends Controller
      */
     public function create()
     {
-        return view('puestos.create');
+        $puesto = new Puesto();
+        $user = User::all();
+        return view('puestos.create', compact('puesto', 'user'));
+
     }
 
     /**
@@ -36,17 +42,21 @@ class PuestosController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'puesto' => 'required',
-            'lugar' => 'required',
-            'salario' => 'required',
-            'tipo_empleo' => 'required',
-            'turno' => 'required',
-            'descripcion' => 'required',
-            'experiencia' => 'required',
-        ]);
-        Puesto::create($request->all());
-        return redirect()->route('puestos.index');
+
+        $puesto = new Puesto();
+        $puesto->puesto = $request->get('puesto');
+        $puesto->lugar = $request->get('lugar');
+        $puesto->salario = $request->get('salario');
+        $puesto->tipo_empleo = $request->get('tipo_empleo');
+        $puesto->turno = $request->get('turno');
+        $puesto->descripcion = $request->get('descripcion');
+        $puesto->experiencia = $request->get('experiencia');
+        $puesto->user_id = auth()->id();
+        $puesto->save();
+
+         return redirect()->route('puesto-index');
+
+
     }
 
     /**

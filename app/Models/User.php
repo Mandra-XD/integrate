@@ -8,7 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Contracts\Auth\CanResetPassword;
-
+use App\Models\Empresa;
+use App\Models\Puesto;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -18,16 +19,17 @@ class User extends Authenticatable
      *
      * @var string[]
      */
-    protected $primary_key = 'idReclutador';
+    protected $primary_key = 'id';
+
+
     protected $fillable = [
-        'idReclutador',
         'name',
         'email',
         'password',
         'location',
         'phone',
         'about',
-        'password_confirmation'
+        'password_confirmation',
     ];
 
     /**
@@ -48,10 +50,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+      public function empresa()
+    {
+
+        return $this->belongsTo(Empresa::class);
+    }
+
+     public function puesto()
+    {
+
+        return $this->hasMany(Puesto::class,'idPuestoTrabajo','id');
     }
 
 }
